@@ -21,7 +21,4 @@ const mapStateToProps = state => ({
 	auth: state.auth
 });
 
-export default connect(
-	mapStateToProps,
-	{}
-)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
