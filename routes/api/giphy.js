@@ -26,7 +26,7 @@ router.get("/", auth, async (req, res) => {
 // @access   Public
 router.post("/search", async (req, res) => {
 	let str1 = "http://api.giphy.com/v1/gifs/search?q=";
-	const str2 = "&api_key=LEls10pQ1lqL1lxLehiPoD0P61SpGcQK&limit=9";
+	const str2 = "&api_key=[API_KEY_HERE]&limit=9";
 	str1 = str1.concat(req.body.searchTerm);
 	const url = str1.concat(str2).toString();
 
