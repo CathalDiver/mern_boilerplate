@@ -3,40 +3,81 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container } from "reactstrap";
-import { getAllUsers } from "../../actions/auth";
+import { getGiphies, searchGiphy } from "../../actions/giphy";
+import { Grid, Input, Image, Divider } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 
 class AllUsers extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchTerm: ""
+		};
+
+		this.onChange = this.onChange.bind(this);
+	}
+
 	componentDidMount() {
-		this.props.getAllUsers();
+		this.props.getGiphies();
+	}
+
+	onChange(e) {
+		this.setState({ [e.target.name]: e.target.value }, () => {
+			this.handleChange();
+		});
+	}
+
+	handleChange(e) {
+		const searchDetails = {
+			searchTerm: this.state.searchTerm
+		};
+
+		this.props.searchGiphy(searchDetails);
 	}
 
 	render() {
-		const { users } = this.props;
-		const userVar = users.map(function(user, i) {
+		const { data } = this.props.giphy.giphys;
+		const gifVar = data.map(function(giphy, i) {
 			return (
-				<div key={i}>
-					<h2>{user.name}</h2>
-					<h5>{user.email}</h5>
-					<h5>{user.date}</h5>
-				</div>
+				<Grid.Column key={i}>
+					<Image
+						src={giphy.images.fixed_height_still.url}
+						bordered={true}
+					/>
+				</Grid.Column>
 			);
 		});
-		return <Container>{userVar}</Container>;
+		return (
+			<Container>
+				<Input
+					type="text"
+					placeholder="Search for...."
+					name="searchTerm"
+					value={this.state.searchTerm}
+					onChange={this.onChange}
+					size="massive"
+					fluid={true}
+				/>
+				<Divider />
+				<Grid columns={3} divided verticalAlign={"middle"}>
+					<Grid.Row>{gifVar}</Grid.Row>
+				</Grid>
+			</Container>
+		);
 	}
 }
 
 AllUsers.propTypes = {
-	users: PropTypes.array.isRequired
+	giphy: PropTypes.object.isRequired,
+	searchGiphy: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-	auth: state.auth,
-	company: state.company,
 	errors: state.errors,
-	users: state.auth.users
+	giphy: state.giphy
 });
 
 export default connect(
 	mapStateToProps,
-	{ getAllUsers }
+	{ getGiphies, searchGiphy }
 )(withRouter(AllUsers));

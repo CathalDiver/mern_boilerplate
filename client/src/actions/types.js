@@ -9,3 +9,6 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 export const ALL_USERS = "ALL_USERS";
+export const GET_GIPHIES = "GET_GIPHIES";
+export const SEARCH_GIPHY = "SEARCH_GIPHY";
+export const GET_ERRORS = "GET_ERRORS";
