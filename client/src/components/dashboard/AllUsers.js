@@ -40,10 +40,7 @@ class AllUsers extends React.Component {
 		const gifVar = data.map(function(giphy, i) {
 			return (
 				<Grid.Column key={i}>
-					<Image
-						src={giphy.images.fixed_height_still.url}
-						bordered={true}
-					/>
+					<Image src={giphy.images.preview_gif.url} name={i} />
 				</Grid.Column>
 			);
 		});
